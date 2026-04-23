@@ -12,7 +12,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index() {
-        String viewName = getViewName();
+//        String viewName = getViewName();
         return viewName;
     }
 
