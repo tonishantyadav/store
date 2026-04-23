@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StoreApplication {
     public static void main(String[] args) {
 //        SpringApplication.run(StoreApplication.class, args);
-        OrderService orderService = new OrderService(new PaypalPaymentService());
+        OrderService orderService = new OrderService();
+        orderService.setPaymentService(new StripePaymentService());
         orderService.placeOrder();
     }
 }
