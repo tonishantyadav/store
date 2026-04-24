@@ -3,7 +3,7 @@ package com.nishant.store;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-@Service("stripe")
+@Service
 @Primary
 public class StripePaymentService implements PaymentService {
     @Override
