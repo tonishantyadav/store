@@ -9,13 +9,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class StoreApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-        User user = new User();
-        user.setId(1);
-        user.setEmail("test@domain.com");
-        user.setPassword("1234");
-        user.setName("John Smith");
-
-        UserService userService = context.getBean(UserService.class);
-        userService.registerUser(user);
+//        User user = new User();
+//        user.setId(1);
+//        user.setEmail("test@domain.com");
+//        user.setPassword("1234");
+//        user.setName("John Smith");
+//
+//        UserService userService = context.getBean(UserService.class);
+//        userService.registerUser(user);
     }
 }
