@@ -74,6 +74,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3306/store?createDatabaseIfNotExist=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false</url>
+                    <user>root</user>
+                    <password>qwerty@123</password>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
