@@ -1,27 +1,27 @@
 package com.nishant.store;
 
+import com.nishant.store.entities.Category;
+import com.nishant.store.entities.Product;
 import com.nishant.store.entities.Profile;
 import com.nishant.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.math.BigDecimal;
 
 @SpringBootApplication
 public class StoreApplication {
     public static void main(String[] args) {
 //        ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-        User user = User.builder()
-                .name("John Smith")
-                .email("johnsmith@domain.com")
-                .password("password")
+        Category category = Category.builder()
+                .name("Clothing")
                 .build();
 
-        Profile profile = Profile.builder()
-                .bio("Hi")
-                .dateOfBirth("24-08-2024")
-                .phoneNumber("1234567890")
-                .loyaltyPoints(12)
+        Product product = Product.builder()
+                .name("H&M")
+                .price(BigDecimal.valueOf(100.2))
                 .build();
 
-        user.setProfile(profile);
-        System.out.println(user);
+        category.addProduct(product);
+        System.out.println(category);
     }
 }
