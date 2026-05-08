@@ -1,5 +1,6 @@
 package com.nishant.store;
 
+import com.nishant.store.entities.Address;
 import com.nishant.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,6 +13,15 @@ public class StoreApplication {
                 .email("johnsmith@domain.com")
                 .password("password")
                 .build();
+        System.out.println(user);
+
+        Address address = Address.builder()
+                .street("ABC")
+                .city("DEF")
+                .state("X")
+                .build();
+
+        user.addAddress(address);
         System.out.println(user);
     }
 }

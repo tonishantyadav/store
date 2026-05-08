@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "user")
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -25,4 +25,8 @@ public class Address {
 
     @Column(name = "state")
     private String state;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
 }
