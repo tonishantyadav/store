@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "user")
 @Table(name = "profiles")
 public class Profile {
     @Id
@@ -27,4 +27,8 @@ public class Profile {
 
     @Column(name = "loyalty_points")
     private Integer loyaltyPoints;
+
+    @OneToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -1,6 +1,7 @@
 package com.nishant.store;
 
 import com.nishant.store.entities.Address;
+import com.nishant.store.entities.Profile;
 import com.nishant.store.entities.Tag;
 import com.nishant.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,16 +16,14 @@ public class StoreApplication {
                 .password("password")
                 .build();
 
-        Address address = Address.builder()
-                .street("ABC")
-                .city("DEF")
-                .state("X")
+        Profile profile = Profile.builder()
+                .bio("Hi")
+                .dateOfBirth("24-08-2024")
+                .phoneNumber("1234567890")
+                .loyaltyPoints(12)
                 .build();
 
-        Tag tag = new Tag();
-        tag.setName("ABC");
-
-        user.addTag(tag);
+        user.setProfile(profile);
         System.out.println(user);
     }
 }
