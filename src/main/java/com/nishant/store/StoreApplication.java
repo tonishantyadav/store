@@ -1,8 +1,6 @@
 package com.nishant.store;
 
-import com.nishant.store.entities.Address;
 import com.nishant.store.entities.Profile;
-import com.nishant.store.entities.Tag;
 import com.nishant.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
