@@ -1,47 +1,30 @@
 package com.nishant.store;
 
 import com.nishant.store.entities.*;
+import com.nishant.store.repositories.UserRepository;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import java.math.BigDecimal;
+import java.util.NoSuchElementException;
 
 @SpringBootApplication
 public class StoreApplication {
     public static void main(String[] args) {
-//        ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+        ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+        UserRepository userRepository = context.getBean(UserRepository.class);
 
         User user = User.builder()
                 .name("John Smith")
-                .email("johnsmith@domain.com")
-                .password("johnsmith")
+                .email("john.smith@domain.com")
+                .password("john.smith@123")
                 .build();
 
-        Address address = Address.builder()
-                .street("XYZ")
-                .city("ABC")
-                .state("KA")
-                .build();
+        userRepository.save(user);
 
-        Tag tag = Tag.builder()
-                .name("Student")
-                .build();
+        user = userRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("User with the given id doesn't exists!"));
+        System.out.println(user.getEmail());
 
-        Category category = Category.builder()
-                .name("Clothing")
-                .build();
-
-        Product product = Product.builder()
-                .name("H&M")
-                .price(BigDecimal.valueOf(100.2))
-                .build();
-
-        user.addAddress(address);
-        user.addTag(tag);
-
-        category.addProduct(product);
-
-        user.addToWishList(product);
-
-        System.out.println(user);
     }
 }

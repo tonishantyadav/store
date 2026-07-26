@@ -12,8 +12,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"addresses", "tags"})
 @Builder
-@ToString(exclude = "profile")
 @Entity
 @Table(name = "users")
 public class User {
@@ -22,39 +22,35 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @Builder.Default // Initialization required for builder pattern
+    // One to many
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
-    @ManyToMany
+    // Many to Many
+    @Builder.Default
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "user_tags",
+            name = "users_tags", // table name
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
 
     @ManyToMany
-    @JoinTable(
-            name = "wishlist",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    @Builder.Default
-    private Set<Product> wishlist = new HashSet<>();
+    private List<Wishlist> wishlists = new ArrayList<>();
 
     public void addAddress(Address address) {
         addresses.add(address);
@@ -66,23 +62,26 @@ public class User {
         address.setUser(null);
     }
 
-    public void addTag(Tag tag) {
+    public void addTag(String tagName) {
+        Tag tag = new Tag();
         tags.add(tag);
         tag.getUsers().add(this);
     }
 
     public void removeTag(Tag tag) {
         tags.remove(tag);
-        tag.getUsers().remove(this);
+        tag.getUsers().remove(null);
     }
 
-    public void addToWishList(Product product) {
-        wishlist.add(product);
-        product.getUsers().add(this);
+    public void addToWhishlist(Product product) {
+        Wishlist item = Wishlist.builder()
+                .user(this)
+                .product(product)
+                .build();
+        wishlists.add(item);
     }
 
-    public void removeFromWishlist(Product product) {
-        wishlist.remove(product);
-        product.getUsers().remove(this);
+    public void removeFromWhishlist(Product product) {
+        wishlists.removeIf(item -> item.getProduct().equals(product));
     }
 }

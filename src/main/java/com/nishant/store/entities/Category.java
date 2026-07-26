@@ -3,16 +3,14 @@ package com.nishant.store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"products"})
 @Builder
-@ToString
 @Entity
 @Table(name = "categories")
 public class Category {
@@ -24,17 +22,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category")
     @Builder.Default
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private HashSet<Product> products = new HashSet<>();
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.setCategory(this);
-    }
-
-    public void removProduct(Product product) {
-        products.remove(product);
-        product.setCategory(null);
-    }
 }

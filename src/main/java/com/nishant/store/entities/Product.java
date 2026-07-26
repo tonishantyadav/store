@@ -4,21 +4,21 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "category")
 @Builder
-@ToString(exclude = {"category", "users"})
 @Entity
-@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -30,7 +30,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(mappedBy = "wishlist")
-    @Builder.Default
-    private HashSet<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "product")
+    private List<Wishlist> wishlistItems = new ArrayList<>();
 }

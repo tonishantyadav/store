@@ -1,20 +1,24 @@
 package com.nishant.store.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@ToString()
+@Entity
 @Table(name = "profiles")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "bio")
     private String bio;
@@ -26,9 +30,9 @@ public class Profile {
     private String dateOfBirth;
 
     @Column(name = "loyalty_points")
-    private Integer loyaltyPoints;
+    private Integer loyaltyPoint;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }
